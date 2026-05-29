@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: website-deployment
+  name: website
 spec:
   replicas: 2
   selector:
@@ -13,22 +13,19 @@ spec:
         app: website
     spec:
       containers:
-      - name: website-container
-        image: 165314937469.dkr.ecr.ap-south-1.amazonaws.com/docker-image-0111:latest
+      - name: website
+        image: saurabh633848/image:latest
         ports:
         - containerPort: 80
-        imagePullPolicy: Always
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: website-service
 spec:
+  type: LoadBalancer
   selector:
     app: website
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer
+  - port: 80
+    targetPort: 80
